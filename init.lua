@@ -563,7 +563,20 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
-        -- pyright = {},
+        pyright = {
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+              },
+            },
+          },
+        },
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -907,6 +920,14 @@ require('lazy').setup({
     },
   },
 })
+vim.lsp.config('ruff', {
+  init_options = {
+    settings = {
+      -- Ruff language server settings go here
+    },
+  },
+})
 
+vim.lsp.enable 'ruff'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
